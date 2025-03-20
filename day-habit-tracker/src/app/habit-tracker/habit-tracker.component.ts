@@ -16,14 +16,16 @@ interface Task {
         <h1>My Daily Schedule</h1>
         <h2>{{ currentDate | date: 'fullDate' }}</h2>
     </div>
-    <div class="task-container">
-      <div *ngFor="let task of visibleTasks; let i = index" class="task-card" 
-           [class.focus]="isCurrentTask(task)" 
-           [style.opacity]="getOpacity(i)">
-        <div class="progress" *ngIf="isCurrentTask(task)" [style.width]="getProgress(task) + '%'">
+    <div class="month-container" style="display:flex">
+      <div *ngFor="let day of daysOfMonth" class="task-container">
+        <div *ngFor="let task of visibleTasks; let i = index" class="task-card" 
+            [class.focus]="isCurrentTask(task)" 
+            [style.opacity]="getOpacity(i)">
+          <div class="progress" *ngIf="isCurrentTask(task)" [style.width]="getProgress(task) + '%'">
+          </div>
+          <h2>{{ task.title }}</h2>
+          <p>{{ task.startTime }} - {{ task.endTime }}</p>
         </div>
-        <h2>{{ task.title }}</h2>
-        <p>{{ task.startTime }} - {{ task.endTime }}</p>
       </div>
     </div>
   `,
@@ -118,6 +120,7 @@ export class HabitTrackerComponent implements OnInit {
   currentDate: Date = new Date();
   visibleTasks: Task[] = [];
   updatedCurrentIndex = 0;
+  daysOfMonth= [1,2,3,4,5];
 
   isCurrentTask(task: Task): boolean {
     const now = new Date();

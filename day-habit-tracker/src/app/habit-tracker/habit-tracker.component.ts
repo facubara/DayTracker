@@ -16,7 +16,7 @@ interface Task {
         <h1>My Daily Schedule</h1>
         <h2>{{ currentDate | date: 'fullDate' }}</h2>
     </div>
-    <div class="month-container" style="display:flex">
+    <div class="month-container">
       <div *ngFor="let day of daysOfMonth" class="task-container">
         <div *ngFor="let task of visibleTasks; let i = index" class="task-card" 
             [class.focus]="isCurrentTask(task)" 
@@ -32,7 +32,11 @@ interface Task {
   styles: [
     `@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
   
-
+      .month-container{
+        display:flex;
+        justify-content: center;
+        height:50%;
+      }
       .header {
         text-align: center;
         margin-bottom: 20px;
@@ -53,10 +57,27 @@ interface Task {
        display: flex; 
        flex-direction: column; 
        gap: 15px; 
-       width: 320px; 
+      //  width: 320px; 
+       height: 400px; /* Set a fixed height */
        margin: auto;
        align-items: center;
        font-family: 'Roboto', sans-serif;
+       overflow-y: auto; /* Enable vertical scrolling */
+       overflow-x: hidden;
+       scrollbar-width: thin; /* For Firefox */
+       scrollbar-color: #888 transparent; /* For Firefox */
+     }
+     .task-container::-webkit-scrollbar {
+       width: 8px; /* Width of the scrollbar */
+     }
+     .task-container::-webkit-scrollbar-track {
+       background: transparent; /* Remove track background */
+     }
+     .task-container::-webkit-scrollbar-thumb {
+       background-color: red;
+       background: linear-gradient(180deg, #2196f3, #21cbf3); /* Stylish gradient */
+       border-radius: 10px; /* Roundness of the scrollbar */
+       border: 2px solid transparent; /* Padding around the scrollbar */
      }
      .task-card {
        position: relative;
@@ -67,7 +88,7 @@ interface Task {
        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
        transition: transform 0.3s ease-in-out, background-color 0.3s, opacity 0.5s ease-in-out, box-shadow 0.3s;
        overflow: hidden;
-       width: 100%;
+       width: 80%;
        text-align: center;
      }
      .task-card h2 {
@@ -120,7 +141,7 @@ export class HabitTrackerComponent implements OnInit {
   currentDate: Date = new Date();
   visibleTasks: Task[] = [];
   updatedCurrentIndex = 0;
-  daysOfMonth= [1,2,3,4,5];
+  daysOfMonth= [1,2,3];
 
   isCurrentTask(task: Task): boolean {
     const now = new Date();

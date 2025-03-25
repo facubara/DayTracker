@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+
+  h1 {
+    font-size: 2em;
+    margin: 0;
+    color: #333;
+  }
+
+  h2 {
+    font-size: 1.2em;
+    margin: 0;
+    color: #666;
+  }
+}
+
+.month-container {
+  display: flex;
+  height: 100%;
+  height: 80vh;
+//   justify-content: center;
+//   align-items: center;
+}
+
+.task-container { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 15px; 
+  width: 500px; 
+  margin: auto;
+  align-items: center;
+  font-family: 'Roboto', sans-serif;
+  max-height: 60vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  height: 100%;
+  
+  /* Custom Scrollbar */
+  scrollbar-width:initial;
+  //scrollbar-color: #2196f3 #f0f0f0;
+  
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #94a58e;
+    border-radius: 4px;
+  }
+}
+
+.task-card {
+  position: relative;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, background-color 0.3s, opacity 0.5s ease-in-out, box-shadow 0.3s;
+  overflow: hidden;
+  width: 300px;
+  min-height: 80px;
+  text-align: center;
+
+  h2 {
+    font-size: 1.2em;
+    margin: 0 0 10px;
+    color: #333;
+  }
+
+  p {
+    font-size: 0.9em;
+    color: #666;
+  }
+}
+
+.focus {
+  transform: scale(1.05);
+  font-weight: bold;
+  background-color: #edf0eb;
+  border-color: #758670;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: rgba(148, 165, 142, 0.3);
+  transition: width 1s linear;
+}

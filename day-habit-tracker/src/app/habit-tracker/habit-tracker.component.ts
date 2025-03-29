@@ -7,6 +7,11 @@ interface Task {
   endTime: string;
 }
 
+interface DayTasks{
+  date:Date;
+  tasks: Task[];
+}
+
 @Component({
   selector: 'app-habit-tracker',
   standalone: true,
@@ -40,6 +45,28 @@ export class HabitTrackerComponent implements OnInit {
   updatedCurrentIndex = 0;
   daysOfMonth= [1,2,3];
 
+  dayTasks: DayTasks[]=[
+    {
+      date: new Date(2025,2,27),
+      tasks: this.tasks
+    },
+    {
+      date: new Date(2025,2,28),
+      tasks: this.tasks
+    },    
+    {
+      date: new Date(2025,2,29),
+      tasks: this.tasks
+    },    
+    {
+      date: new Date(2025,2,30),
+      tasks: this.tasks
+    },    
+    {
+      date: new Date(2025,2,31),
+      tasks: this.tasks
+    },
+  ]
   isCurrentTask(task: Task): boolean {
     const now = new Date();
     const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
@@ -85,4 +112,29 @@ export class HabitTrackerComponent implements OnInit {
     console.log('this.updatedCurrentIndex: ', this.updatedCurrentIndex);
     setInterval(() => this.tasks = [...this.tasks], 60000); // Refresh every minute
   }
+
+
+
+  previousDay() {
+    this.currentDate.setDate(this.currentDate.getDate() - 1);
+    this.updateVisibleTasks();
+  }
+
+  nextDay() {
+    this.currentDate.setDate(this.currentDate.getDate() + 1);
+    this.updateVisibleTasks();
+  }
+
+  updateVisibleTasks() {
+    this.visibleTasks = this.getVisibleTasks();
+    this.updatedCurrentIndex = this.visibleTasks.findIndex(task => this.isCurrentTask(task));
+  }
+
+  isFocusedDay(date: Date): boolean {
+    console.log('date.ToString: ', date.toDateString())
+    console.log('this.currentDate.todatestring:', this.currentDate.toDateString())
+    return date.toDateString() === this.currentDate.toDateString();
+  }
 }
+
+

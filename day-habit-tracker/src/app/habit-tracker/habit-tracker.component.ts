@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 interface Task {
@@ -40,33 +40,47 @@ export class HabitTrackerComponent implements OnInit {
   { title: 'Relaxation (watch something, play games, browse the internet)', startTime: '22:30', endTime: '23:30' },
   { title: 'Wind down (reading, light stretching)', startTime: '23:30', endTime: '00:00' }
 ];
-  currentDate: Date = new Date();
+
   visibleTasks: Task[] = [];
-  updatedCurrentIndex = 0;
-  daysOfMonth= [1,2,3];
+  currentTaskIndex: number = 0;
+  updatedCurrentTaskIndex = 0;
+  currentDate: Date = new Date();
+  currentDateIndex: number = 0;
 
   dayTasks: DayTasks[]=[
-    {
-      date: new Date(2025,2,27),
-      tasks: this.tasks
-    },
-    {
-      date: new Date(2025,2,28),
-      tasks: this.tasks
-    },    
-    {
-      date: new Date(2025,2,29),
-      tasks: this.tasks
-    },    
-    {
-      date: new Date(2025,2,30),
-      tasks: this.tasks
-    },    
     {
       date: new Date(2025,2,31),
       tasks: this.tasks
     },
+    {
+      date: new Date(2025,3,1),
+      tasks: this.tasks
+    },    
+    {
+      date: new Date(2025,3,2),
+      tasks: this.tasks
+    },    
+    {
+      date: new Date(2025,3,3),
+      tasks: this.tasks
+    },    
+    {
+      date: new Date(2025,3,4),
+      tasks: this.tasks
+    },
   ]
+  constructor(){
+
+  }
+  ngOnInit() {
+    this.visibleTasks = this.getVisibleTasks();
+    this.updatedCurrentTaskIndex = this.visibleTasks.findIndex(task => this.isCurrentTask(task));
+    this.currentDateIndex = this.dayTasks.findIndex(elem => elem.date.toDateString() == this.currentDate.toDateString());
+    // console.log('this.currentDateIndex: ', this.currentDateIndex);
+    // console.log('this.currentIndex: ', this.currentIndex);
+    setInterval(() => this.tasks = [...this.tasks], 60000); // Refresh every minute
+  }
+
   isCurrentTask(task: Task): boolean {
     const now = new Date();
     const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
@@ -84,12 +98,9 @@ export class HabitTrackerComponent implements OnInit {
   }
 
   getOpacity(index: number): number {
-    //const currentTaskIndex = this.getCurrentTaskIndex();
-    // If the task is before the current task, reduce its opacity
-    if (index < this.updatedCurrentIndex) {
-      return 1 - (this.updatedCurrentIndex - index) * 0.3;
+    if (index < this.updatedCurrentTaskIndex) {
+      return 1 - (this.updatedCurrentTaskIndex - index) * 0.3;
     }
-    // If the task is the current task or after, set full opacity
     return 1;
   }
 
@@ -99,41 +110,43 @@ export class HabitTrackerComponent implements OnInit {
 
   getVisibleTasks(): Task[] {
     const currentIndex = this.getCurrentTaskIndex();
-    console.log('currentIndex: ', currentIndex);
+    this.currentTaskIndex = currentIndex;
     const tasks = this.tasks.slice(Math.max(0, currentIndex - 3));
     return tasks;
   }
 
-  ngOnInit() {
-    console.log('this.tasks: ', this.tasks);
-    this.visibleTasks = this.getVisibleTasks();
-    console.log('visibleTasks: ', this.visibleTasks);
-    this.updatedCurrentIndex = this.visibleTasks.findIndex(task => this.isCurrentTask(task));
-    console.log('this.updatedCurrentIndex: ', this.updatedCurrentIndex);
-    setInterval(() => this.tasks = [...this.tasks], 60000); // Refresh every minute
-  }
-
-
-
   previousDay() {
+    this.currentDate = new Date(this.currentDate);
     this.currentDate.setDate(this.currentDate.getDate() - 1);
-    this.updateVisibleTasks();
+    this.currentDateIndex--;
   }
 
   nextDay() {
-    this.currentDate.setDate(this.currentDate.getDate() + 1);
-    this.updateVisibleTasks();
+    this.currentDate = new Date(this.currentDate);
+    this.currentDate.setDate(this.currentDate.getDate() +1)
+    this.currentDateIndex++;
   }
 
   updateVisibleTasks() {
     this.visibleTasks = this.getVisibleTasks();
-    this.updatedCurrentIndex = this.visibleTasks.findIndex(task => this.isCurrentTask(task));
+    this.updatedCurrentTaskIndex = this.visibleTasks.findIndex(task => this.isCurrentTask(task));
   }
 
   isFocusedDay(date: Date): boolean {
-    console.log('date.ToString: ', date.toDateString())
-    console.log('this.currentDate.todatestring:', this.currentDate.toDateString())
     return date.toDateString() === this.currentDate.toDateString();
+  }
+
+  isToday(date:Date):boolean{
+    return date.toDateString() === new Date().toDateString();
+  }
+
+  getCarouselTransform(): string {
+    const containerWidth = 500; // Width of each task container
+    const visibleItems = 3; // Number of items you want visible in the carousel
+    const totalVisibleWidth = containerWidth * visibleItems;
+    const offset = (this.currentDateIndex - Math.floor(visibleItems / 2)) * containerWidth;
+    console.log('offset: ', offset);
+    return `translateX(calc(50% - ${totalVisibleWidth / 2}px - ${offset}px))`;
   }
 }
 

@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DbService } from '../services/dbservice.service';
 
 interface Task {
   title: string;
@@ -46,7 +47,7 @@ export class HabitTrackerComponent implements OnInit {
   updatedCurrentTaskIndex = 0;
   currentDate: Date = new Date();
   currentDateIndex: number = 0;
-
+  root: any;
   dayTasks: DayTasks[]=[
     {
       date: new Date(2025,2,31),
@@ -69,9 +70,9 @@ export class HabitTrackerComponent implements OnInit {
       tasks: this.tasks
     },
   ]
-  constructor(){
-
+  constructor(private dbService: DbService){
   }
+
   ngOnInit() {
     this.visibleTasks = this.getVisibleTasks();
     this.updatedCurrentTaskIndex = this.visibleTasks.findIndex(task => this.isCurrentTask(task));

@@ -1,0 +1,19 @@
+<div class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <h2>Edit Task</h2>
+    <div>
+      <label for="title">Title:</label>
+      <input [(ngModel)]="task.title" id="title" type="text">
+    </div>
+    <div>
+      <label for="startTime">Start Time:</label>
+      <input [(ngModel)]="task.startTime" id="startTime" type="time">
+    </div>
+    <div>
+      <label for="endTime">End Time:</label>
+      <input [(ngModel)]="task.endTime" id="endTime" type="time">
+    </div>
+    <button (click)="saveTask()">Save</button>
+  </div>
+</div>

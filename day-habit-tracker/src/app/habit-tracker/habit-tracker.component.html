@@ -1,1 +1,42 @@
-<p>habit-tracker works!</p>
+<div class="header">
+  <h1>My Daily Schedule</h1>
+  <h2>{{ currentDate | date: 'fullDate' }}</h2>
+  <button (click)="previousDay()" [disabled]="currentDateIndex === 0" class="nav-button left">←</button>
+  <button (click)="nextDay()" [disabled]="currentDateIndex === dayTasks.length - 1" class="nav-button right">→</button>
+</div>
+<div class="header-buttons">
+    <button (click)="fillMonthDummy()" class="">Fill Month Dummy</button>
+    <button (click)="getTasksById()" class="">Get Tasks By Id</button>
+</div>
+<div class="carousel-container">
+
+  <div class="carousel" [style.transform]="getCarouselTransform()">
+    <div *ngFor="let dayTask of dayTasks; let i = index" class="task-container"
+         [class.focused-day]="isFocusedDay(dayTask.date)">
+      <div *ngFor="let task of dayTask.tasks; let j = index" class="task-card"
+           [class.focus]="isCurrentTask(task) && isFocusedDay(dayTask.date) && isToday(dayTask.date)"
+           [style.opacity]="getOpacity(j)">
+        <div class="progress" *ngIf="isCurrentTask(task) && isFocusedDay(dayTask.date) && isToday(dayTask.date)" [style.width]="getProgress(task) + '%'"></div>
+        <h2>{{ task.title }}</h2>
+        <p>{{ task.startTime }} - {{ task.endTime }}</p>
+          <div class="task-buttons">
+            <button (click)="editTask(task, dayTask.date)" class="edit-btn">Edit</button>
+            <button (click)="deleteTask(task, dayTask.date)" class="delete-btn">Delete</button>
+          </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="add-task">
+    <button (click)="addTask()" class="">+ Add Task</button>
+</div>
+
+<app-edit-task-modal
+  *ngIf="editingTask"
+  [task]="editingTask"
+  [date]="editingDate"
+  (taskSaved)="onTaskSaved($event)"
+  (modalClosed)="closeModal()">
+</app-edit-task-modal>

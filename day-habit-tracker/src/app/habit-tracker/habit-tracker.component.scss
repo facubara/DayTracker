@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+
+  h1 {
+    font-size: 2em;
+    margin: 0;
+    color: #333;
+  }
+
+  h2 {
+    font-size: 1.2em;
+    margin: 0;
+    color: #666;
+  }
+}
+
+.header-buttons{
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.add-task{
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.month-container {
+  display: flex;
+  height: 100%;
+  height: 80vh;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.carousel-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60h;
+  // position: relative;
+  overflow: hidden;
+}
+
+.carousel {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  // overflow-x: auto;
+  // scroll-snap-type: x mandatory;
+  // -webkit-overflow-scrolling: touch;
+}
+
+
+.task-container { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 15px; 
+  width: 500px; 
+  margin: auto;
+  align-items: center;
+  font-family: 'Roboto', sans-serif;
+  max-height: 60vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  height: 100%;
+  transition: transform 0.5s ease-in-out, z-index 0.5s ease-in-out;
+  transform: scale(0.9);
+  z-index: 1;
+  /* Custom Scrollbar */
+  scrollbar-width:initial;
+  //scrollbar-color: #2196f3 #f0f0f0;
+  
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #94a58e;
+    border-radius: 4px;
+  }
+}
+
+.task-card {
+  position: relative;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, background-color 0.3s, opacity 0.5s ease-in-out, box-shadow 0.3s;
+  overflow: hidden;
+  width: 300px; // you might consider increasing this width
+  min-height: 120px; // increase min-height to accommodate longer content
+  max-height: auto; // remove fixed height if previously set
+  text-align: center;
+
+  h2 {
+    font-size: 1.2em;
+    margin: 0 0 10px;
+    color: #333;
+    line-height: 1.4; // slightly increase line-height for better readability
+  }
+
+  p {
+    font-size: 0.9em;
+    color: #666;
+    line-height: 1.2; // ensure time text is readable too
+  }
+
+  .task-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 15px; // provide more space between text and buttons
+  }
+}
+
+.focus {
+  transform: scale(1.05);
+  font-weight: bold;
+  background-color: #edf0eb;
+  border-color: #758670;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: rgba(148, 165, 142, 0.3);
+  transition: width 1s linear;
+}
+
+.nav-button {
+  background-color: #94a58e;
+  border: none;
+  color: white;
+  padding: 10px;
+  font-size: 1.5em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border-radius: 50%;
+  // position: absolute;
+  top: 10px;
+}
+
+.nav-button.left {
+  left: 10px;
+}
+
+.nav-button.right {
+  right: 10px;
+}
+
+.nav-button:hover {
+  background-color: #758670;
+}
+
+.focused-day {
+  transform: scale(1.1);
+  z-index: 10;
+}
+
+// .edit-btn, .delete-btn {
+//   background-color: #94a58e;
+//   border: none;
+//   color: white;
+//   padding: 5px 10px;
+//   font-size: 0.9em;
+//   cursor: pointer;
+//   transition: background-color 0.3s;
+//   border-radius: 5px;
+// }
+
+// .edit-btn:hover, .delete-btn:hover {
+//   background-color: #758670;
+// }

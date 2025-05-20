@@ -2,7 +2,7 @@
   <h1>My Daily Schedule</h1>
   <h2>{{ currentDate | date: 'fullDate' }}</h2>
   <!-- <button (click)="previousDay()" [disabled]="currentDateIndex === 0" class="nav-button left">←</button> -->
-   <button class="arrow-button"><img src="../../assets/left-arrow.svg" (click)="previousDay()"/></button>
+   <button class="arrow-button"><img src="assets/left-arrow.svg" (click)="previousDay()"/></button>
   <button (click)="nextDay()" [disabled]="currentDateIndex === dayTasks.length - 1" class="nav-button right">→</button>
 </div>
 <div class="header-buttons">

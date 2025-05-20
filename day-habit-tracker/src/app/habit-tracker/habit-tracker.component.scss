@@ -86,19 +86,29 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out, background-color 0.3s, opacity 0.5s ease-in-out, box-shadow 0.3s;
   overflow: hidden;
-  width: 300px;
-  min-height: 80px;
+  width: 300px; // you might consider increasing this width
+  min-height: 120px; // increase min-height to accommodate longer content
+  max-height: auto; // remove fixed height if previously set
   text-align: center;
 
   h2 {
     font-size: 1.2em;
     margin: 0 0 10px;
     color: #333;
+    line-height: 1.4; // slightly increase line-height for better readability
   }
 
   p {
     font-size: 0.9em;
     color: #666;
+    line-height: 1.2; // ensure time text is readable too
+  }
+
+  .task-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 15px; // provide more space between text and buttons
   }
 }
 
@@ -147,4 +157,19 @@
 .focused-day {
   transform: scale(1.1);
   z-index: 10;
+}
+
+.edit-btn, .delete-btn {
+  background-color: #94a58e;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border-radius: 5px;
+}
+
+.edit-btn:hover, .delete-btn:hover {
+  background-color: #758670;
 }

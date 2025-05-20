@@ -4,7 +4,10 @@
   <button (click)="previousDay()" [disabled]="currentDateIndex === 0" class="nav-button left">←</button>
   <button (click)="nextDay()" [disabled]="currentDateIndex === dayTasks.length - 1" class="nav-button right">→</button>
 </div>
-
+<div class="header">
+    <button (click)="fillMonthDummy()" class="">Fill Month Dummy</button>
+    <button (click)="getTasksById()" class="">Get Tasks By Id</button>
+</div>
 <div class="carousel-container">
 
   <div class="carousel" [style.transform]="getCarouselTransform()">
@@ -16,8 +19,20 @@
         <div class="progress" *ngIf="isCurrentTask(task) && isFocusedDay(dayTask.date) && isToday(dayTask.date)" [style.width]="getProgress(task) + '%'"></div>
         <h2>{{ task.title }}</h2>
         <p>{{ task.startTime }} - {{ task.endTime }}</p>
+          <div class="task-buttons">
+            <button (click)="editTask(task, dayTask.date)" class="edit-btn">Edit</button>
+            <button (click)="deleteTask(task, dayTask.date)" class="delete-btn">Delete</button>
+          </div>
       </div>
     </div>
   </div>
 
 </div>
+
+<app-edit-task-modal
+  *ngIf="editingTask"
+  [task]="editingTask"
+  [date]="editingDate"
+  (taskSaved)="onTaskSaved($event)"
+  (modalClosed)="closeModal()">
+</app-edit-task-modal>

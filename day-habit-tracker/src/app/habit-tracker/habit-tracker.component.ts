@@ -2,36 +2,18 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DbService } from '../services/dbservice.service';
 import { DayTasks, Task } from '../model';
+import { FormsModule } from '@angular/forms'; // Import FormsModule
+import { EditTaskModalComponent } from '../edit-task-modal/edit-task-modal.component';
 
 
 @Component({
   selector: 'app-habit-tracker',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, EditTaskModalComponent],
   templateUrl: './habit-tracker.component.html',
   styleUrls: ['./habit-tracker.component.scss']
 })
 export class HabitTrackerComponent implements OnInit {
-//   tasksExample: Task[] = [
-//   { title: 'Wake up & have yerba mate', startTime: '09:30', endTime: '10:00' },
-//   { title: 'Light browsing / relaxation', startTime: '10:00', endTime: '10:30' },
-//   { title: 'Morning walk (get some steps in)', startTime: '10:30', endTime: '11:00' },
-//   { title: 'Focused work session', startTime: '11:00', endTime: '12:45' },
-//   { title: 'Short break (stretch, quick walk)', startTime: '12:45', endTime: '13:00' },
-//   { title: 'Lunch', startTime: '13:00', endTime: '13:30' },
-//   { title: 'Light walk (more steps)', startTime: '13:30', endTime: '14:00' },
-//   { title: 'Relax (browsing, music, power nap)', startTime: '14:00', endTime: '14:30' },
-//   { title: 'Focused work session', startTime: '14:30', endTime: '16:00' },
-//   { title: 'Break (snack, stretch)', startTime: '16:00', endTime: '16:15' },
-//   { title: 'Work session', startTime: '16:15', endTime: '18:00' },
-//   { title: 'Short break (move around)', startTime: '18:00', endTime: '18:15' },
-//   { title: 'Final work session', startTime: '18:15', endTime: '20:00' },
-//   { title: 'Dinner', startTime: '20:00', endTime: '20:30' },
-//   { title: 'Side projects / learning', startTime: '20:30', endTime: '21:30' },
-//   { title: 'Exercise (gym, jogging, or long walk)', startTime: '21:30', endTime: '22:30' },
-//   { title: 'Relaxation (watch something, play games, browse the internet)', startTime: '22:30', endTime: '23:30' },
-//   { title: 'Wind down (reading, light stretching)', startTime: '23:30', endTime: '00:00' }
-// ];
 
   tasks: Task[] = [];
   visibleTasks: Task[] = [];
@@ -41,6 +23,8 @@ export class HabitTrackerComponent implements OnInit {
   currentDateIndex: number = 0;
   root: any;
   dayTasks: DayTasks[]=[];
+  editingTask: Task | null = null; // This is for the modal
+  editingDate: string | null = null;
   constructor(private dbService: DbService){
   }
 
@@ -49,8 +33,6 @@ export class HabitTrackerComponent implements OnInit {
     this.visibleTasks = this.getVisibleTasks();
     this.updatedCurrentTaskIndex = this.visibleTasks.findIndex(task => this.isCurrentTask(task));
     this.currentDateIndex = this.dayTasks.findIndex(elem => elem.date == this.formatDate(this.currentDate));
-    console.log(this.formatDate(this.currentDate));
-    console.log(this.currentDateIndex)
     setInterval(() => this.tasks = [...this.tasks], 60000); // Refresh every minute
   }
 
@@ -129,6 +111,42 @@ export class HabitTrackerComponent implements OnInit {
     const day = date.getDate().toString().padStart(2, '0'); // Ensure two digits
     return `${year}-${month}-${day}`;
   }
+
+  fillMonthDummy(){
+    this.dbService.addTasksForCurrentMonthDummy();
+  }
+
+  async deleteTask(task: Task, date: string) {
+    console.log('Deleting task:', task);
+    await this.dbService.deleteTaskByDateAndTitle(date, task.title);
+    this.dayTasks = await this.dbService.getTasks(); // Refresh tasks from the database
+    this.updateVisibleTasks(); // Update visible tasks after deletion
+  }
+
+
+  editTask(selectedTask: Task, selectedDate: string) {
+    this.editingTask = { ...selectedTask };
+    this.editingDate = selectedDate;
+    console.log(this.editingTask)
+  }
+
+  closeModal() {
+    this.editingTask = null;
+  }
+
+  async onTaskSaved(event: {task: Task, date: string}) {
+    if (this.editingTask) {
+      await this.dbService.updateTask(event.date, event.task);
+      this.dayTasks = await this.dbService.getTasks(); // Refresh tasks
+      this.updateVisibleTasks(); // Reorder tasks
+      this.closeModal();
+    }
+  }
+
+  getTasksById(){
+    this.dbService.getTasksById("2025-05-20")
+  }
+
 }
 
 

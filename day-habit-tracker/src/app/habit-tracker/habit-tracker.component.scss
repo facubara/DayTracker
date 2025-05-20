@@ -19,6 +19,18 @@
   }
 }
 
+.header-buttons{
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.add-task{
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
 .month-container {
   display: flex;
   height: 100%;
@@ -33,7 +45,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 80vh;
+  height: 60h;
   // position: relative;
   overflow: hidden;
 }
@@ -159,17 +171,17 @@
   z-index: 10;
 }
 
-.edit-btn, .delete-btn {
-  background-color: #94a58e;
-  border: none;
-  color: white;
-  padding: 5px 10px;
-  font-size: 0.9em;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  border-radius: 5px;
-}
+// .edit-btn, .delete-btn {
+//   background-color: #94a58e;
+//   border: none;
+//   color: white;
+//   padding: 5px 10px;
+//   font-size: 0.9em;
+//   cursor: pointer;
+//   transition: background-color 0.3s;
+//   border-radius: 5px;
+// }
 
-.edit-btn:hover, .delete-btn:hover {
-  background-color: #758670;
-}
+// .edit-btn:hover, .delete-btn:hover {
+//   background-color: #758670;
+// }

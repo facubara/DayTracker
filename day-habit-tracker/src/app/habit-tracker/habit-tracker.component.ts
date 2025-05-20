@@ -24,7 +24,7 @@ export class HabitTrackerComponent implements OnInit {
   root: any;
   dayTasks: DayTasks[]=[];
   editingTask: Task | null = null; // This is for the modal
-  editingDate: string | null = null;
+  editingDate: string = "";
   constructor(private dbService: DbService){
   }
 
@@ -145,6 +145,10 @@ export class HabitTrackerComponent implements OnInit {
 
   getTasksById(){
     this.dbService.getTasksById("2025-05-20")
+  }
+
+  addTask(){
+    
   }
 
 }

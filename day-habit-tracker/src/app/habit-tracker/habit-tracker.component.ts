@@ -90,7 +90,9 @@ export class HabitTrackerComponent implements OnInit {
   }
 
   isFocusedDay(date: string): boolean {
-    return date === this.currentDate.toDateString();
+    console.log(date);
+    console.log(this.formatDate(this.currentDate));
+    return date === this.formatDate(this.currentDate);
   }
 
   isToday(date:string):boolean{

@@ -48,14 +48,12 @@
   height: 60h;
   // position: relative;
   overflow: hidden;
+  padding: 50px;
 }
 
 .carousel {
   display: flex;
   transition: transform 0.5s ease-in-out;
-  // overflow-x: auto;
-  // scroll-snap-type: x mandatory;
-  // -webkit-overflow-scrolling: touch;
 }
 
 
@@ -102,6 +100,7 @@
   min-height: 120px; // increase min-height to accommodate longer content
   max-height: auto; // remove fixed height if previously set
   text-align: center;
+  margin-bottom: 20px;
 
   h2 {
     font-size: 1.2em;
@@ -118,9 +117,24 @@
 
   .task-buttons {
     display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 15px; // provide more space between text and buttons
+    justify-content: space-between;
+
+    button{
+      width: 25px;
+      height: 25px;
+      padding: 0;
+      border: none;
+      background: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    button img {
+      max-width: 100%;
+      max-height: 100%;
+      display: block;
+    }
   }
 }
 
@@ -171,20 +185,6 @@
   z-index: 10;
 }
 
-// .edit-btn, .delete-btn {
-//   background-color: #94a58e;
-//   border: none;
-//   color: white;
-//   padding: 5px 10px;
-//   font-size: 0.9em;
-//   cursor: pointer;
-//   transition: background-color 0.3s;
-//   border-radius: 5px;
-// }
-
-// .edit-btn:hover, .delete-btn:hover {
-//   background-color: #758670;
-// }
 .arrow-button {
   position:absolute;
   background: none;
@@ -193,14 +193,16 @@
   padding: 0;
   width: 48px;
   height: 48px;
+  top:50%
 }
 
 .arrow-button.right{
-  right: -1px;
+  right: -10px;
+  left:87.5%
 }
 
 .arrow-button.left{
-  left: -1px;
+  left: 15px;
 }
 
 .arrow-button img,
@@ -212,4 +214,22 @@
 
 .arrow-button:hover svg {
   transform: scale(1.1);
+}
+
+
+button{
+  width: 25px;
+  height: 25px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+button img {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
 }
